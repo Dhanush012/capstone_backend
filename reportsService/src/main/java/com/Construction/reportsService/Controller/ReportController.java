@@ -21,5 +21,24 @@ public class ReportController {
     public ResponseEntity<ReportResponseDto> generateReport(@PathVariable Long inputId) {
         return ResponseEntity.ok(reportService.generateReport(inputId));
     }
+
+    @GetMapping("/{inputId}/pdf")
+    public ResponseEntity<byte[]> generatePdf(@PathVariable Long inputId) {
+        ReportResponseDto reportData = reportService.generateReport(inputId);
+        
+        if (reportData == null) {
+            return ResponseEntity.notFound().build(); // Handle missing reports
+        }
+
+        byte[] pdfBytes = pdfDownloader.generatePdfReport(reportData); // Use instance method
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentDispositionFormData("attachment", "report.pdf");
+        headers.setContentType(MediaType.APPLICATION_PDF);
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(pdfBytes);
+    }
 }
 
