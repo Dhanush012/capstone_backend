@@ -8,7 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Construction.reportsService.Dto.ReportResponseDto;
+import com.Construction.reportsService.Service.PdfDownloader;
 import com.Construction.reportsService.Service.ReportService;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+
 
 @RestController
 @RequestMapping("/api/reports")
@@ -16,6 +20,9 @@ public class ReportController {
 
     @Autowired
     private ReportService reportService;
+
+    @Autowired
+    private PdfDownloader pdfDownloader;
 
     @GetMapping("/{inputId}")
     public ResponseEntity<ReportResponseDto> generateReport(@PathVariable Long inputId) {

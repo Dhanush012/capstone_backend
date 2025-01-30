@@ -5,7 +5,6 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 
 import java.io.ByteArrayOutputStream;
-import java.util.List;
 
 import org.springframework.stereotype.Service;
 
